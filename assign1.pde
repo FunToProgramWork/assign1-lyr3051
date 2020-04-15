@@ -1,7 +1,8 @@
-PImage imgBg, imgBg2, actorGH, actorSoldier, lifeHT;
+PImage imgBg, imgBg2, actorGH, actorSoldier, lifeHT, actorRobot;
 int n=6;
 int m=8;
 int lifeHx=0;
+float soldierX=random(160,400);
 
 String pathData="D:/assign1-lyr3051/img/";
 void setup() {
@@ -11,7 +12,7 @@ void setup() {
   actorGH=loadImage(pathData+"groundhog.png");
   actorSoldier=loadImage(pathData+"soldier.png");
   lifeHT=loadImage(pathData+"life.png");
-  
+  actorRobot=loadImage(pathData+"robot.png");
 	// Enter Your Setup Code Here
 }
 
@@ -45,7 +46,6 @@ void draw() {
   
 	// Enter Your Code Here
 image(imgBg,0,0);
-
 image(lifeHT,10,10);
 image(lifeHT,80,10);
 image(lifeHT,150,10);
@@ -54,12 +54,10 @@ fill(124,204,25);
 drawline();
 stroke(124,204,25);
 rect(0,145,width,15);
-
 image(actorGH,280,80);
-
 drawcircle();
-image(actorSoldier,0,400);
-
+image(actorSoldier,0,soldierX);
+image(actorRobot,400,160);
 
 
 }
