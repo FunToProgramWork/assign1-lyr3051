@@ -7,16 +7,16 @@ int[] soldierRY= {160, 240, 320, 400};
 int[] robotRX= {160, 240, 320, 400, 480, 560};
 int[] robotRY= {160, 240, 320, 400};
 
-int soldierX=int(random(soldierRX.length));//the location of the soldier is random but have to located on the line
+int soldierX=int(random(soldierRX.length));//pick the value in the array in random
 int soldierY=int(random(soldierRY.length));
-int robotX=int(random(robotRX.length));//the location of the soldier is random but have to located on the line
+int robotX=int(random(robotRX.length));
 int robotY=int(random(robotRY.length));
 
 
-int i=0;
-int j=0;
+int i=0;//let the second point of the line chage
+int j=0;//let the first point of the line change
 
-int lens=20;
+
 String pathData="img/";
 
 
@@ -38,7 +38,7 @@ void drawline() {
   strokeWeight(1);
   while (verticallineX<width) {
     line(verticallineX, 160, verticallineX, height);
-    verticallineX+=80;
+    verticallineX+=80;//distance between two lines
   }
 
 
@@ -76,17 +76,18 @@ void move() {
 
 
 void razerMove() {
+  //draw the line to make the razer
   fill(255,0,0);
-  i+=2;  
   strokeWeight(10);  
   stroke(255,0,0);
+  i+=2;//change x2 to keep drawing the line
   line(robotRX[robotX]+25-j, robotRY[robotY]+37, robotRX[robotX]+25-i, robotRY[robotY]+37);
-
+  //line(x1,y1,x2,y2)
   if (i>20) {
-    j+=2;
+    j+=2;//draw the line until the direct path between x1 and x2 is 40 pixels and then change x1
   }
   
-  if(i==180){
+  if(i>180){//reset when the x2 is away from the x1 180
     i=0;
     j=0;
   }
