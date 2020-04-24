@@ -2,16 +2,23 @@ PImage imgBg, imgBg2, actorGH, actorSoldier, lifeHT, actorRobot;
 int lifeHx=0;//the times which you can play of the image location 
 int width=640;
 int height=480;
-float[] razerX= new float[160];
-float soldierY=1;//the x-axis and y-axis of robot and soldier default to 1
-float robotY=1;
-float soldierX=1;
-float robotX=1;
+int[] soldierRX= {80, 160, 240, 320, 400, 480, 560};
+int[] soldierRY= {160, 240, 320, 400};
+int[] robotRX= {160, 240, 320, 400, 480, 560};
+int[] robotRY= {160, 240, 320, 400};
+
+int soldierX=int(random(soldierRX.length));//the location of the soldier is random but have to located on the line
+int soldierY=int(random(soldierRY.length));
+int robotX=int(random(robotRX.length));//the location of the soldier is random but have to located on the line
+int robotY=int(random(robotRY.length));
+
 
 int i=0;
-int timer=0;
+int j=0;
+
 int lens=20;
-String pathData="D:Git/assign1-lyr3051/img/";
+String pathData="img/";
+
 
 
 void setup() {
@@ -22,7 +29,6 @@ void setup() {
   actorSoldier=loadImage(pathData+"soldier.png");
   lifeHT=loadImage(pathData+"life.png");
   actorRobot=loadImage(pathData+"robot.png");
-  razerX[0]=1;
 }
 
 void drawline() {
@@ -59,67 +65,34 @@ void drawGrass() {
 
 
 
-void drawSoldier() {
-  while (soldierY%80!=0) {
-
-    while (soldierX%80!=0) {
-      soldierX=random(0, 640);//the location of the soldier is random but have to located on the line
-    }
-    soldierY=random(160, 480);
-  }
-
-  image(actorSoldier, soldierX, soldierY);
-}
-
 void move() {
 
-  soldierX+=10;//the location (x-axis) of the soldier moving to the right 5 pixel each time 
+  soldierRX[soldierX]+=5;//the location (x-axis) of the soldier moving to the right 5 pixel each time 
 
-  if (soldierX>640) {
-    soldierX=0;//if the x-axis is over 640, x-axis will reset to 0
+  if (soldierRX[soldierX]>640) {
+    soldierRX[soldierX]=0;//if the x-axis is over 640, x-axis will reset to 0
   }
 }
 
-void drawRobot() {
-  while (robotY%80!=0 ) {//the location of the soldier is random but have to located on the line
 
+void razerMove() {
+  fill(255,0,0);
+  i+=2;  
+  strokeWeight(10);  
+  stroke(255,0,0);
+  line(robotRX[robotX]+25-j, robotRY[robotY]+37, robotRX[robotX]+25-i, robotRY[robotY]+37);
 
-    while (robotX%80!=0) {
-      robotX=random(160, 640);
-    }
-      robotY=random(160, 480);
-  }
-
-  image(actorRobot, robotX, robotY);
-  //razerMove(robotX); //draw the razer of the robot
-}
-
-
-
-void razerMove(float robotXX) {
-int num=0;
-  razerX[num]=robotXX+25;// the array of razerX is store the location of the razer
-  while (i<lens) {//this while decide the length of the razer
-    //delay(1000);
-    razerX[num]-=1;
-    //for(int j=20;i>0;i--){
-      //razerX[j]=razerX[j-1];
-    fill(255, 0, 0);
-    stroke(255, 0, 0);
-    
-    ellipse(razerX[num], robotY+37, 5, 5);
-    razerX[num+1]=razerX[num];
-    print(razerX[num]);
-    //}
-    i++;
+  if (i>20) {
+    j+=2;
   }
   
-  //if (timer>10) {
+  if(i==180){
     i=0;
-  //}
-
-  //timer++;
+    j=0;
+  }
 }
+
+
 
 
 void draw() {
@@ -131,11 +104,10 @@ void draw() {
   image(lifeHT, 150, 10);
   image(imgBg2, 0, 160);
   drawGrass();
-  image(actorGH, 280, 80);
   drawCircle();
-  drawSoldier();
+  image(actorGH, 280, 80);
+  image(actorSoldier, soldierRX[soldierX], soldierRY[soldierY]);
+  image(actorRobot, robotRX[robotX], robotRY[robotY]);
   move();
-  drawRobot();
-  razerMove(robotX);
-  
+  razerMove();
 }
